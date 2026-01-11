@@ -10,7 +10,6 @@
 * Home assistant
 * Twillo
 * Pushover
-Future intergrations
-* 4G SIM SMS
-* 
-A ESP8266 Program using PGM ( Programmable Output ) to detect a burglary and system arm with integrations with home assistant, twillo and pushover.
+### Future intergrations
+* 4G SIM SMS/Calling
+* OTA Updates
