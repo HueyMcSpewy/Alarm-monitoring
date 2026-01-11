@@ -1,1 +1,30 @@
+core:
+  alarm-monitoring: true
+  arm-monitoring: true
+  wifi: true
+wifi:
+  ssid: ""
+  password: ""
+
+twilio:
+  enabled: false
+  token: ""
+
+pushover:
+  enabled: false
+  token: ""
+
+email:
+  enabled: false
+  smtp:
+    server: ""
+    port: 587
+    user: ""
+    password: ""
+
+mqtt:
+  server: ""
+  in_topic: ""
+  out_topic: ""
+  client_id: ""
 
