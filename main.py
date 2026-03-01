@@ -1,13 +1,10 @@
 import time
 import RPi.GPIO as GPIO
 import paho.mqtt.client as mqtt
-import os
 import logging
 import requests
-from dotenv import load_dotenv
 
 # dotenv 
-load_dotenv()
 Pushoverkey =
 pushovertoken =
 mqttbroker =
