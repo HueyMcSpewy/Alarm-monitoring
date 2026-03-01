@@ -26,7 +26,7 @@ last_armed = GPIO.input(armpin)
 last_triggered = GPIO.input(alarmpin)
 
 # mqtt
-client = mqtt.Client(client_id="ALARM-MONITOR")
+client = mqtt.Client(client_id="ALARM-MONITOR", protocol=mqtt.MQTTv5)
 client.username_pw_set(mqttuser, mqttpass)
 client.connect(mqttbroker, 1883, 60)
 client.loop_start()
