@@ -13,8 +13,8 @@ pushovertoken = os.getenv("PUSHOVER_TOKEN")
 mqttbroker = os.getenv("MQTT_BROKER")
 mqttuser = os.getenv("MQTT_USER")
 mqttpass = os.getenv("MQTT_PASS")
-armpin = int(os.getenv("ARM_PIN"))
-alarmpin = int(os.getenv("ALARM_PIN"))
+armpin = 3
+alarmpin = 5
 
 #logging setup
 logging.basicConfig(level=logging.INFO)
