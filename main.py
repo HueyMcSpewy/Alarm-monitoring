@@ -74,6 +74,7 @@ try:
                 send_pushover("System clear", "The alarm system is now clear", 0)
                 logging.info("clear")
                 client.publish("home/alarm/alarm", "OFF", retain=True)
+        logging.info("loop")
         time.sleep(0.2)
 
 finally:
