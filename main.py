@@ -1,38 +1,48 @@
-import network
 import time
-import urequests
-from machine import Pin
-from config import ssid, password, pushoverenbl, token, alarmpin, armpin, mserver, mclientid, armtopic, alarmtopic, userkey 
+import RPi.GPIO as GPIO
+import asyncio
+import paho.mqtt.client as mqtt
+import os
+import logging
+from dotenv import load_dotenv
 
-# Internal pullups 
+import utils.utils as utils
+from utils.pushover import send_pushover
+from utils.utils import start
 
-alarmpin_obj = Pin(alarmpin, Pin.IN Pin.PULL_UP)
-armpin_obj = Pin(armpin, Pin.IN Pin.PULL_UP)
 
+# main part
 
-def arm_pin(alarmpin):
-    if alarmpin.value() == 0:
-# come back with mqtt and pushover
-        pass
-    else:
-        pass
+start()
 
-def wifi(ssid, password):
-    sta_if = network.WLAN(network.STA_IF)
-    if not sta_if.isconnected():
-        print("Connecting to network")
-        sta_if
-        sta_if.active(True)
-        sta_if.connect(ssid, password)
-        while not sta_if.isconnected():
-            pass
-    print("network config", sta_if.ifconfig())
+try:
+    # arm loop
+    while True:
+        armed = GPIO.input(utils.armpin)
+        alarm = GPIO.input(utils.alarmpin)
+        
+        if armed != last_armed:
+            last_armed = armed
+            if armed == 0:
+                send_pushover("System Armed", "Alarm system is now armd", -2)
+                logging.info("armed")
+                client.publish("home/alarm/armed", "ON", retain=True)
+            else:
+                send_pushover("System Disarmed", "Alarm system is now disarmed", -2)
+                logging.info("disarmed")
+                client.publish("home/alarm/armed", "OFF", retain=True)
+        if alarm != last_triggered:
+            last_triggered = alarm
+            if alarm == 0:
+                send_pushover("System Alarm", "The alarm system has been set off", 1)
+                logging.warning("alarm")
+                client.publish("home/alarm/alarm", "ON", retain=True)
+            else:
+                send_pushover("System clear", "The alarm system is now clear", 0)
+                logging.info("clear")
+                client.publish("home/alarm/alarm", "OFF", retain=True)
+        time.sleep(0.2)
 
-def pushover(pushoverenbl, token, userkey, title, message):
-    if pushoverenbl == True:
-        data = {
-            "token": {token},
-            "user": {userkey},
-            "title": {title},
-            "message": {message}
-        }
+finally:
+    GPIO.cleanup()
+       
