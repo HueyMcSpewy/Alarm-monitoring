@@ -5,6 +5,7 @@ import paho.mqtt.client as mqtt
 import os
 import logging
 from dotenv import load_dotenv
+load_dotenv()
 
 import utils.utils as utils
 from utils.pushover import send_pushover
@@ -13,14 +14,16 @@ from utils.utils import start
 
 # main part
 
-start()
+utils.start()
 
 try:
     # arm loop
     while True:
         armed = GPIO.input(utils.armpin)
         alarm = GPIO.input(utils.alarmpin)
-        
+
+        if os.getenv("ARM_PIN") is None:
+            raise RuntimeError("ARM_PIN not set in environment")
         if armed != last_armed:
             last_armed = armed
             if armed == 0:
