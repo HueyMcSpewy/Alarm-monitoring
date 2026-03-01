@@ -8,11 +8,11 @@ from dotenv import load_dotenv
 
 # dotenv 
 load_dotenv()
-Pushoverkey = os.getenv("PUSHOVER_KEY")
-pushovertoken = os.getenv("PUSHOVER_TOKEN")
-mqttbroker = os.getenv("MQTT_BROKER")
-mqttuser = os.getenv("MQTT_USER")
-mqttpass = os.getenv("MQTT_PASS")
+Pushoverkey =
+pushovertoken =
+mqttbroker =
+mqttuser =
+mqttpass =
 armpin = 3
 alarmpin = 5
 
