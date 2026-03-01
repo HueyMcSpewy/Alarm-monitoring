@@ -22,8 +22,8 @@ GPIO.setup(armpin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(alarmpin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 # intial states
-last_armed = GPIO.input(armpin)
-last_triggered = GPIO.input(alarmpin)
+last_armed = None
+last_triggered = None
 
 # mqtt
 client = mqtt.Client(client_id="ALARM-MONITOR", protocol=mqtt.MQTTv5)
