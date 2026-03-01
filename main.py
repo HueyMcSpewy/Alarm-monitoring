@@ -1,33 +1,66 @@
 import time
 import RPi.GPIO as GPIO
-import asyncio
 import paho.mqtt.client as mqtt
 import os
 import logging
+import requests
 from dotenv import load_dotenv
+
+# dotenv 
 load_dotenv()
+Pushoverkey = os.getenv("PUSHOVER_KEY")
+pushovertoken = os.getenv("PUSHOVER_TOKEN")
+mqttbroker = os.getenv("MQTT_BROKER")
+mqttuser = os.getenv("MQTT_USER")
+mqttpass = os.getenv("MQTT_PASS")
+armpin = int(os.getenv("ARM_PIN"))
+alarmpin = int(os.getenv("ALARM_PIN"))
 
-import utils.utils as utils
-from utils.pushover import send_pushover
-from utils.utils import start
+#logging setup
+logging.basicConfig(level=logging.INFO)
 
+# gpio
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(armpin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(alarmpin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-# main part
+# intial states
+last_armed = GPIO.input(armpin)
+last_triggered = GPIO.input(alarmpin)
 
-utils.start()
+# mqtt
+client = mqtt.Client(client_id="ALARM-MONITOR")
+client.username_pw_set(mqttuser, mqttpass)
+client.connect(mqttbroker, 1883, 60)
+client.loop_start()
+
+# pushover
+def send_pushover(title, message, priority=0):
+    try:
+        requests.post(
+            "https://api.pushover.net/1/messages.json",
+            data={
+                "token": pushovertoken,
+                "user": Pushoverkey,
+                "title": title,
+                "message": message,
+                "priority": priority
+            }
+        )
+    except Exception as e:
+        print("Pushover error:", e)
+
 
 try:
     # arm loop
     while True:
-        armed = GPIO.input(utils.armpin)
-        alarm = GPIO.input(utils.alarmpin)
-
-        if os.getenv("ARM_PIN") is None:
-            raise RuntimeError("ARM_PIN not set in environment")
+        armed = GPIO.input(armpin)
+        alarm = GPIO.input(alarmpin)
+        
         if armed != last_armed:
             last_armed = armed
             if armed == 0:
-                send_pushover("System Armed", "Alarm system is now armd", -2)
+                send_pushover("System Armed", "Alarm system is now armed", -2)
                 logging.info("armed")
                 client.publish("home/alarm/armed", "ON", retain=True)
             else:
