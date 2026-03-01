@@ -4,14 +4,14 @@ import paho.mqtt.client as mqtt
 import logging
 import requests
 
-# dotenv 
-Pushoverkey =
-pushovertoken =
-mqttbroker =
-mqttuser =
-mqttpass =
-armpin = 3
-alarmpin = 5
+# dotenv
+Pushoverkey = ""
+pushovertoken = ""
+mqttbroker = ""
+mqttuser = ""
+mqttpass = ""
+armpin = 2
+alarmpin = 3
 
 #logging setup
 logging.basicConfig(level=logging.INFO)
@@ -19,7 +19,7 @@ logging.basicConfig(level=logging.INFO)
 # gpio
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(armpin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(alarmpin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(alarmpin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 # intial states
 last_armed = None
@@ -53,7 +53,7 @@ try:
     while True:
         armed = GPIO.input(armpin)
         alarm = GPIO.input(alarmpin)
-        
+
         if armed != last_armed:
             last_armed = armed
             if armed == 0:
@@ -79,4 +79,3 @@ try:
 
 finally:
     GPIO.cleanup()
-       
