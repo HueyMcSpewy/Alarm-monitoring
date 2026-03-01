@@ -1,5 +1,5 @@
 dotenv
 requests
 RPi.GPIO
-paho
+paho-mqtt
 os
