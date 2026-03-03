@@ -14,4 +14,18 @@ mqtt:
       state_topic: "home/alarm/alarm"
       payload_on: "ON"
       payload_off: "OFF"
-      device_class: safetymqtt
+      device_class: safety
+
+    - name: "Hallway pir"
+      unique_id: hallway_pir_sensor
+      state_topic: "home/alarm/hallway"
+      payload_on: "ON"
+      payload_off: "OFF"
+      device_class: montion
+
+    - name: "Kitchen pir"
+      unique_id: Kitchen_pir_sensor
+      state_topic: "home/alarm/kitchen"
+      payload_on: "ON"
+      payload_off: "OFF"
+      device_class: montion
