@@ -1,0 +1,17 @@
+# this is the config for the homeassistant configuration.yaml
+
+mqtt:
+  binary_sensor:
+    - name: "Alarm Armed"
+      unique_id: alarm_armed_sensor
+      state_topic: "home/alarm/armed"
+      payload_on: "ON"
+      payload_off: "OFF"
+      device_class: safety
+
+    - name: "Alarm Triggered"
+      unique_id: alarm_triggered_sensor
+      state_topic: "home/alarm/alarm"
+      payload_on: "ON"
+      payload_off: "OFF"
+      device_class: safetymqtt
