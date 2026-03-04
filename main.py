@@ -21,8 +21,8 @@ logging.basicConfig(level=logging.INFO)
 # gpio
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(armpin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(kitchenpir, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-GPIO.setup(hallwaypir, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(kitchenpir, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(hallwaypir, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(alarmpin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 # intial states
@@ -86,7 +86,7 @@ try:
 
         if kitchen != last_kitchenpir:
             last_kitchenpir = kitchen
-            if kitchen == 1:
+            if kitchen == 0:
                 logging.info("kitchen")
                 client.publish("home/alarm/kitchen", "ON", retain=True)
             else:
@@ -95,7 +95,7 @@ try:
 
         if hallway != last_hallwaypir:
             last_hallwaypir = hallway
-            if hallway == 1:
+            if hallway == 0:
                 logging.info("hallway")
                 client.publish("home/alarm/hallway", "ON", retain=True)
             else:
