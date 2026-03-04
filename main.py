@@ -86,7 +86,7 @@ try:
 
         if kitchen != last_kitchenpir:
             last_kitchenpir = kitchen
-            if kitchen == 0:
+            if kitchen == 1:
                 logging.info("kitchen")
                 client.publish("home/alarm/kitchen", "ON", retain=True)
             else:
@@ -95,7 +95,7 @@ try:
 
         if hallway != last_hallwaypir:
             last_hallwaypir = hallway
-            if hallway == 0:
+            if hallway == 1:
                 logging.info("hallway")
                 client.publish("home/alarm/hallway", "ON", retain=True)
             else:
