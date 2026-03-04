@@ -12,8 +12,8 @@ mqttuser = ""
 mqttpass = ""
 armpin = 2
 alarmpin = 3
-kitchenpir = 29
-hallwaypir = 19
+kitchenpir = 17
+hallwaypir = 4
 
 #logging setup
 logging.basicConfig(level=logging.INFO)
