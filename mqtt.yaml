@@ -21,11 +21,11 @@ mqtt:
       state_topic: "home/alarm/hallway"
       payload_on: "ON"
       payload_off: "OFF"
-      device_class: montion
+      device_class: motion
 
     - name: "Kitchen pir"
       unique_id: Kitchen_pir_sensor
       state_topic: "home/alarm/kitchen"
       payload_on: "ON"
       payload_off: "OFF"
-      device_class: montion
+      device_class: motion
